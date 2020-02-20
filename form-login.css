@@ -1,0 +1,11 @@
+.text-center {
+	color: grey;
+}
+
+.container {
+	width:30%;
+	margin-top:10%;
+	background-color: #FFFACD;
+	padding:40px;
+}
+
