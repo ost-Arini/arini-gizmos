@@ -11,7 +11,6 @@ function validate() {
 	
 	form.addEventListener('submit', (event) => {
 		let messages = [] 
-		event.preventDefault();
 		if(name.value === '' || name.value == null){
 			messages.push('Name is required')
 		}if(!name.value.match(alphabets)) {
@@ -38,6 +37,7 @@ function validate() {
 		}
 
 		if(messages.length > 0){
+			event.preventDefault();
 			temp = [];
 			for (var i = 0; i < messages.length; i++){
 				temp.push('<p>'+messages[i]+'</p>');
@@ -45,19 +45,7 @@ function validate() {
 			$("#messages").html(temp);
 			return false;
 		}
-		else{
-			document.location.href = 'formlogin.php'
-			// $("#messages").hide();
-		}
-		
 
-
-		
-
-		// if(messages.length > 0){
-		// 	event.preventDefault()
-		// 	errorElement.innerText = messages.join (', ')
-		// }
 	});
 
 

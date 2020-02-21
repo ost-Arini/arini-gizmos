@@ -1,5 +1,5 @@
-<!doctype php>
-<php lang="en">
+<!doctype html>
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,7 +19,7 @@
   <body>
     <div class="container">
       <h2 class="text-center">Login</h2>
-      <form id="form" action="" method="post">
+      <form id="form" action="action/doLogin.php" method="post">
         <div class="form-group">
           <label>Username</label>
           <input type="text" id="username" name="username" class="form-control col-sm-12 " placeholder="Input Username">
@@ -30,7 +30,14 @@
           <input type="password" id="password" name="password" class="form-control" placeholder="Input Password">
         </div>
         
+       <?php
+       if(isset($_GET["errormessage"])) {
+            $udahada = $_GET['errormessage'];
+            echo $udahada;
+        }
+       
 
+       ?>
         
         <button type="submit" onclick="validation()" class="btn btn-primary">Log in</button>
         <div id="error"><p id="messages" style="color:red"></p></div>
@@ -38,4 +45,4 @@
     </div>
 
   </body>
-</php>
+</html>

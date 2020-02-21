@@ -5,7 +5,7 @@ function validation(){
 
     form.addEventListener('submit', (event) =>{
         let messages = [] 
-        event.preventDefault()
+
         if(username.value === '' || username.value == null){
 			messages.push('Username is required')
         }
@@ -15,6 +15,7 @@ function validation(){
         }
 
         if(messages.length > 0){
+            event.preventDefault();
 			temp = [];
 			for (var i = 0; i < messages.length; i++){
 				temp.push('<p>'+messages[i]+'</p>');
@@ -22,9 +23,9 @@ function validation(){
 			$("#messages").html(temp);
 			return false;
         } 
-        else {
-			document.location.href = 'home.php'
-        }
+        // else {
+		// 	document.location.href = 'home.php'
+        // }
         
         // $("#messages").hide();
     });

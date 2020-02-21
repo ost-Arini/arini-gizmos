@@ -1,5 +1,5 @@
-<!doctype php>
-<php lang="en">
+<!doctype html>
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,10 +19,10 @@
       <h2 class="text mt-5">Registration</h2>
 
       <div id="error"><p id="messages" style="color:red"></p></div>
-      <form id="form" action="" method="POST">
+      <form id="form" action="action/doRegister.php" method="POST">
         <div class="form-group mt-5">
-          <label for="name">Full Name</label>
-          <input id="name" type="text" name="name" class="form-control " placeholder="Input Full Name">
+          <label for="name">Name</label>
+          <input id="name" type="text" name="name" class="form-control " placeholder="Input Name">
         </div>
 
         <div class="form-group">
@@ -83,9 +83,9 @@
         </div>
  -->
         <br>
-        <button type="submit" onclick="validate()" class="btn btn-primary mb-5">Sign Up</button>
+        <button type="submit" name="submit" onclick="validate()" class="btn btn-primary mb-5">Sign Up</button>
         <button type="reset" class="btn btn-danger mb-5">Reset</button>
       </form>
     </div>
   </body>
-</php>
+</html>
