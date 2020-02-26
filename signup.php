@@ -82,6 +82,8 @@
           <small>Maximum 2MB File</small>
         </div>
  -->
+
+        <a href="formlogin.php">Have an account? Click here to Log in</a> <br>
         <br>
         <button type="submit" name="submit" onclick="validate()" class="btn btn-primary mb-5">Sign Up</button>
         <button type="reset" class="btn btn-danger mb-5">Reset</button>

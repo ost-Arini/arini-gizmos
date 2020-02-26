@@ -1,5 +1,34 @@
-<!doctype php>
-<php lang="en">
+<?php
+
+
+session_start();
+
+include ('connect.php');
+
+if(!isset($_SESSION["login"])){
+ echo "<script>window.location.href='formlogin.php'</script>";
+  exit;
+}
+
+$_SESSION['timeout'] = time();
+if ($_SESSION['timeout'] + 60 < time()) {
+  // session timed out
+}
+// else {
+  // session ok
+//}
+
+if (!isset($_SESSION['login'])) {
+  echo "<script>window.location.href='formlogin.php'</script>";
+  exit;
+}
+
+?>
+
+
+
+<!doctype html>
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -26,7 +55,12 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">
+            <?php
+              $_SESSION['username'] = $username;
+              echo "Hello" .$_SESSION['username'];
+            ?>
+            <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +74,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Auction</a>
+            <a class="nav-link" href="logout.php">Log Out</a>
           </li>
           <li class="nav-item">
             <a class="fas fa-user ml-3 mt-2 nav-link" href="#"></a>
@@ -71,4 +105,4 @@
 
 
   </body>
-</php>
+</html>

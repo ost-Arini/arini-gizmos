@@ -1,3 +1,16 @@
+<?php
+session_start();
+if(isset($_SESSION["login"])){
+  echo "<script>window.location.href='home.php'</script>";
+  exit;
+}
+
+//check remember
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -29,16 +42,26 @@
           <label>Password</label>
           <input type="password" id="password" name="password" class="form-control" placeholder="Input Password">
         </div>
-        
+
+        <div class="form-group">
+          <input type="checkbox" id="remember" name="remember">
+          <label>Keep me signed in</label>
+        </div>
+
+        <a class="form-group" href="signup.php">Click here to Sign up</a>
+
+        <br>
+        <br>
        <?php
        if(isset($_GET["errormessage"])) {
-            $udahada = $_GET['errormessage'];
-            echo $udahada;
+            $notfound = $_GET['errormessage'];
+            echo $notfound;
         }
        
 
        ?>
-        
+        <br>
+        <br>
         <button type="submit" onclick="validation()" class="btn btn-primary">Log in</button>
         <div id="error"><p id="messages" style="color:red"></p></div>
       </form>

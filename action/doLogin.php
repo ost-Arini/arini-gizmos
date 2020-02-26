@@ -1,17 +1,22 @@
 <?php 
+session_start();
 
 include ('../connect.php');
 
+$login = $_POST['login'];
 $username = $_POST['username'];
 $password = $_POST['password'];
 $login_query = "SELECT * FROM `users` WHERE `nickname` = '$username' AND `password` = '$password'";
 $result = $db->query($login_query);
+$_SESSION['username'] = $username;
 //echo $login_query;
 
 if ($result->num_rows > 0) {
+    //set session
+    $_SESSION["login"] = true;
     echo "<script>window.location.href='../home.php'</script>";
 }else {
-    echo "<script>window.location.href='../formlogin.php?errormessage=User not Found'</script>";
+    echo "<script>window.location.href='../formlogin.php?errormessage=User not Found!'</script>";
 }
 
 ?>
