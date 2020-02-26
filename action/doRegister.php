@@ -14,7 +14,7 @@ if(isset($_POST["submit"])) {
     //validation in PHP
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $username = $_POST['username'];
+    $urname = $_POST['username'];
     $password = $_POST['password'];
     $gender = $_POST['gender'];
     
@@ -24,13 +24,13 @@ if(isset($_POST["submit"])) {
     //kalo masuk database
     //$db->query == execute query dari $db->query($command)
     $command = "insert into users (user_name,email,nickname,password,gender)
-    VALUES ('$name','$email','$username','$password','$gender')";
+    VALUES ('$name','$email','$urname','$password','$gender')";
     if ($db->query($command) === TRUE) {
         echo "New record created successfully";
         $last_id = $db->insert_id;
                 // pass id to url for success.php
         echo "<script>window.location.href='../success.php?newid=".$last_id."'</script>";
-        echo $name.$email.$username.$password.$gender;
+        echo $name.$email.$urname.$password.$gender;
     } else {
         echo 'エラー発生！';
         echo "Error: " . $query . "<br>" . $db->error;

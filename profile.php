@@ -2,27 +2,24 @@
 
 
 session_start();
-
+//include itu cuma buat global constant
 include ('connect.php');
 
 // $timeout_duration = 60;
 // if(isset($_SESSION))
 $now = time();
-
 if ($now  > $_SESSION['session_expired']){
   session_destroy();
   echo "<script>window.location.href='formlogin.php?errormessage=Please Login!'</script>";
   exit;
 }
-
 if(!isset($_SESSION["login"])){
   echo "<script>window.location.href='formlogin.php'</script>";
   exit;
 }
 
+
 ?>
-
-
 
 <!doctype html>
 <html lang="en">
@@ -35,16 +32,16 @@ if(!isset($_SESSION["login"])){
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/slim.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/formlogin.js"></script>
     <link rel="stylesheet" type="text/css" href="home.css">
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
 
-    <title>Home</title>
+    <title>Profile</title>
   </head>
-
+  
   <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">Home Product</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,7 +55,7 @@ if(!isset($_SESSION["login"])){
             ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="profile.php">Profile</a>
+              <a class="dropdown-item" href="#">Profile</a>
               <a class="dropdown-item" href="#">Gallery</a>
               <a class="dropdown-item" href="logout.php">Log Out</a>
             </div>
@@ -85,25 +82,50 @@ if(!isset($_SESSION["login"])){
       </div>
     </nav>
 
-
     <div class="content">
-      <h2 class="text-center">Lorem Ipsum</h2>
-      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2 class="text-center">Your Profile</h2>
+      <table class="text-center">
+        <?php 
+            $id = $_SESSION['user_id'];
+            $login_query = "SELECT * FROM `users` WHERE `user_id` = $id";  
+            $result= $db->query($login_query);
+        ?><table> <?php 
+        while($row = $result->fetch_assoc()) {
+            // echo "id: " . $row["user_id"]. " - Name: " . $row["user_name"]. " " . $row["email"]. "<br>";
+            ?>  
+            <tr>
+                <td>Name</td>
+                <td><?= $row["user_name"] ?></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><?= $row["email"] ?></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td><?= $row["nickname"] ?></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><?= $row["password"] ?></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td><?php 
+                    //ternary operator = shorthand if else
+                    $realgender = $row["gender"] == 1 ? 'Male' : 'Female';
+                    echo $realgender;
+                
+                // $row["gender"] 
+                
+                ?></td>
+            </tr>
+        
+        
+            
+        
+         <?php } ?> </table>
+      </table>
     </div>
-
-    <!-- <div class="container">
-      <div class="col-md-3">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
   </body>
 </html>
