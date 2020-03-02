@@ -22,8 +22,6 @@ if(!isset($_SESSION["login"])){
 
 ?>
 
-
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -36,15 +34,13 @@ if(!isset($_SESSION["login"])){
     <script type="text/javascript" src="js/slim.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="home.css">
-    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
+    <script type="text/javascript" src="js/submitnew.js"></script>
 
-    <title>Home</title>
+    <title>Submit New</title>
   </head>
-
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="home.php">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -54,7 +50,7 @@ if(!isset($_SESSION["login"])){
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <?php
-              echo "Hello " .$_SESSION['nickname'];
+              echo "Hello " .$_SESSION['username'];
             ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -85,25 +81,64 @@ if(!isset($_SESSION["login"])){
       </div>
     </nav>
 
+<?php
+//tampilin data dari submitnew, pake form yang di hidden, belum ada hubungannya sama database
+    $product_name = $_POST['product_name'];
+    $product_type = $_POST['product_type'];
+    $name = $_FILES['product_image']['name'];
+    //karena masih confirmation page jadi ditaronya di folder temp
+    $target_dir = "upload/temp/";
+    //basename = buat tau file name from full path
+    $target_file = $target_dir  . basename($name);
+    //move_uploaded_file(file, dest)
+    //cuma bisa dipake buat files uploaded via PHP's HTTP POST upload mechanism
+    //kalo filenya udah exist, otomatis dioverwrite
+    move_uploaded_file($_FILES['product_image']['tmp_name'],$target_dir.$name);
+?>
 
-    <div class="content">
-      <h2 class="text-center">Home</h2>
-      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <!-- di confirmation page ini juga pake form, cuma di hidden -->
+    <div class="container">
+      <h2 class="text mt-5">Confirmation Page</h2>
+      <form id="form" action="action/doSubmitnew.php" method="POST" enctype="multipart/form-data">
+
+      <div class="form-group mt-5">
+          <label for="product_name">Product Name</label>
+          <input id="product_name" type="hidden" name="product_name" value="<?= $product_name ?>" class="form-control">
+          <?= $product_name ?>
+        </div>
+
+        <div class="form-group mt-5">
+          <label for="product_image">Product Image</label>
+          <!-- ini style di hidden!-->
+          <input id="product_image" type="hidden" value="<?= $target_file ?>" name="product_image" class="form-control">
+          <input id="product_image"  type="hidden" value="<?= $name ?>" name="image_real_name" class="form-control">
+          <img src="<?=$target_file ?>" alt="">
+        </div>
+
+        <div class="form-group mt-5">
+          <label for="product_type">Product Type :</label>
+          <input name="product_type" type="hidden" value="<?= $product_type ?>">
+          <?php $realtype = $product_type == 1 ? 'New' : 'Used';
+            echo $realtype; ?>
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-primary mb-5">Submit</button>
+        <button type="button" name="cancel" class="btn btn-danger mb-5" onClick="cancelConfirm()">Go Back</button>
+        <!-- bikin alert pake function js -->
+        <script>
+        function cancelConfirm(){
+            var conf = confirm("Are you sure you want to go back? Your uploaded file will not be saved");
+            if(conf == true) {
+                document.location.href = 'submitnew.php';
+            }
+        }
+        </script>
+
+        <!-- <button type="reset" class="btn btn-danger mb-5">Reset</button> -->
+
+      </form>
     </div>
 
-    <!-- <div class="container">
-      <div class="col-md-3">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
+    
   </body>
 </html>

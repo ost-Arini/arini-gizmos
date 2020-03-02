@@ -21,6 +21,7 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc())
     {   //ambil data dari database dan simpen ke session
         $_SESSION['user_id'] = $row['user_id'];
+        $_SESSION['nickname'] = $row['nickname'];
 
     }
 

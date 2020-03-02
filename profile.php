@@ -42,7 +42,7 @@ if(!isset($_SESSION["login"])){
   
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home Product</a>
+      <a class="navbar-brand" href="home.php">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -55,20 +55,20 @@ if(!isset($_SESSION["login"])){
             ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Profile</a>
-              <a class="dropdown-item" href="#">Gallery</a>
+              <a class="dropdown-item" href="profile.php">Profile</a>
+              <!-- <a class="dropdown-item" href="gallery.php">Gallery</a> -->
               <a class="dropdown-item" href="logout.php">Log Out</a>
             </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Features
+              Product
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">New</a>
-              <a class="dropdown-item" href="#">Used</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">SALE</a>
+              <a class="dropdown-item" href="submitnew.php">Submit New</a>
+              <a class="dropdown-item" href="yourproducts.php">Your Products</a>
+              <!-- <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">SALE</a> -->
             </div>
           </li>
           <li class="nav-item">

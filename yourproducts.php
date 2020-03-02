@@ -4,6 +4,11 @@
 session_start();
 
 include ('connect.php');
+$user_id = $_SESSION['user_id'];
+$product_name = $_POST['product_name'];
+// $id = $_GET['user_id'];
+$query = $db->query("SELECT * FROM `products`WHERE created_by_user_id = $user_id");
+// echo $user_id
 
 // $timeout_duration = 60;
 // if(isset($_SESSION))
@@ -36,10 +41,10 @@ if(!isset($_SESSION["login"])){
     <script type="text/javascript" src="js/slim.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="home.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/home.css"> -->
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
 
-    <title>Home</title>
+    <title>Your Products</title>
   </head>
 
   <body>
@@ -54,7 +59,7 @@ if(!isset($_SESSION["login"])){
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <?php
-              echo "Hello " .$_SESSION['nickname'];
+              echo "Hello " .$_SESSION['username'];
             ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -87,8 +92,35 @@ if(!isset($_SESSION["login"])){
 
 
     <div class="content">
-      <h2 class="text-center">Home</h2>
+      <h2 class="text-center">Your Products</h2>
       <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+      <?php
+      //cek ada di database apa nggak 
+      if($query->num_rows > 0){
+        while($row = $query->fetch_assoc()){
+          $imagesource = 'upload/'.$row["product_image"];
+      ?>
+      <div class="card" style="width: 18rem;">
+      
+        <img class="card-img-top" src="<?php echo $imagesource; ?>" alt="" />
+        <div class="card-body">
+          <p><?= $row["product_name"] ?></p>
+          <p><?php 
+                $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
+                echo $realtype; ?></p>
+          <a href="#" class="btn btn-primary">Update</a>
+          <a href="deleteproduct.php" class="btn btn-danger">Delete</a>
+        </div>
+      <?php  
+        
+      }
+      }else{ ?>
+        <p>No Images Found</p>
+      <?php }
+      ?>
+      </div>
+      
     </div>
 
     <!-- <div class="container">

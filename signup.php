@@ -60,7 +60,7 @@
             <label>Female</label>
           </div> -->
          
-        </div>
+        
 
         <!-- <div class="form-group">
           <label>Payment Method</label>
@@ -83,6 +83,7 @@
         </div>
  -->
 
+        <br>
         <a href="formlogin.php">Have an account? Click here to Log in</a> <br>
         <br>
         <button type="submit" name="submit" onclick="validate()" class="btn btn-primary mb-5">Sign Up</button>

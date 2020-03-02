@@ -28,7 +28,7 @@ if(isset($_POST["submit"])) {
     if ($db->query($command) === TRUE) {
         echo "New record created successfully";
         $last_id = $db->insert_id;
-                // pass id to url for success.php
+        // pass id to url for success.php
         echo "<script>window.location.href='../success.php?newid=".$last_id."'</script>";
         echo $name.$email.$urname.$password.$gender;
     } else {
@@ -37,7 +37,7 @@ if(isset($_POST["submit"])) {
     }
             
 } 
-    //kalo tombol submit ga diklik, langsung ke link doRegister
+    //kalo tombol submit ga diklik, langsung ke URL doRegister
 else {
     // 改ざん不正解アクセス予防
     echo "<script> alert('you can\'t access this page');</script>";
