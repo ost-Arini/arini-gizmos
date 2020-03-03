@@ -1,12 +1,13 @@
 <?php
 
+
 session_start();
 
-// $id = $_GET['id'];
-// echo $id;
 include ('connect.php');
 
-$query = $db->query("SELECT * FROM `products`WHERE product_id = $id");
+$id = $_GET['id'];
+// echo $id;
+$query = $db->query("SELECT * FROM `products` WHERE product_id = $id ");
 
 $now = time();
 
@@ -20,6 +21,7 @@ if(!isset($_SESSION["login"])){
   echo "<script>window.location.href='formlogin.php'</script>";
   exit;
 }
+
 ?>
 
 <!doctype html>
@@ -34,12 +36,10 @@ if(!isset($_SESSION["login"])){
     <script type="text/javascript" src="js/slim.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="css/home.css"> -->
-    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
+    <script type="text/javascript" src="js/submitnew.js"></script>
 
-    <title>Delete Product</title>
+    <title>Update Product</title>
   </head>
-
   <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -83,9 +83,48 @@ if(!isset($_SESSION["login"])){
       </div>
     </nav>
 
-    <div class="content">
-      <h2 class="text-center">Delete Product</h2>
-      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
+    <div class="container">
+      <h2 class="text mt-5">Update Product</h2>
+      <div id="error"><p id="messages" style="color:red"></p></div>
+    <?php
+    //cek ada di database apa nggak 
+    if($query->num_rows > 0){
+      while($row = $query->fetch_assoc()){
+        $imagesource = 'upload/'.$row["product_image"];
+    ?>
+        <form id="form" action="confirmupdate.php" method="POST" enctype="multipart/form-data">
+        <div class="form-group mt-5">
+            <label for="product_name">Product Name : <?= $row["product_name"] ?></label>
+            <input id="product_name" type="type" name="product_name" class="form-control" placeholder="Change Product Name">
+        </div>
+
+        <div class="form-group mt-5">
+          <label for="product_image">Product Image : </label>
+          <img src="<?php echo $imagesource; ?>" alt="" />
+          <input id="product_image" type="file" name="product_image" class="form-control">
+        </div>
+      
+        <div class="form-group mt-5">
+          <label for="product_type">Product Type :<?php 
+            $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
+            echo $realtype; ?></label>
+          <select id="product_type" name="product_type" class="form-control">
+            <option value="0">Change Type</option>
+            <option value="1">New</option>
+            <option value="2">Used</option>
+            <!-- <option value="new">Sale</option> -->
+          </select>
+        </div>
+        <button type="submit" name="submit" onclick="validate()" class="btn btn-primary mb-5">Submit</button>
+        <button type="reset" class="btn btn-danger mb-5">Reset</button>
+
+      </form>
+      
+    <?php  
+      
+    }
+    }?>
+    
+   
   </body>
-  </html>
+</html>

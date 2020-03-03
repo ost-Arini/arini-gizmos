@@ -1,12 +1,24 @@
 <?php
 
+
 session_start();
 
-$id = $_GET['id'];
-// echo $id;
 include ('connect.php');
+$user_id = $_SESSION['user_id'];
 
-$query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
+
+$now = time();
+
+if ($now  > $_SESSION['session_expired']){
+  session_destroy();
+  echo "<script>window.location.href='formlogin.php?errormessage=Please Login!'</script>";
+  exit;
+}
+
+if(!isset($_SESSION["login"])){
+  echo "<script>window.location.href='formlogin.php'</script>";
+  exit;
+}
 
 ?>
 
@@ -21,14 +33,16 @@ $query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/slim.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/formlogin.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="css/home.css"> -->
+    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
 
-    <title>Upload Successful</title>
+    <title>Delete Success</title>
   </head>
+
   <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="home.php">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -69,28 +83,8 @@ $query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
       </div>
     </nav>
 
+    <div class="content">
+      <h2 class="text-center">Product Deleted Successfully</h2>
 
-    <div class="container">
-    <h2 class="text mt-5 text-center">Upload Successful</h2>
-    <?php
-    //cek ada di database apa nggak 
-    if($query->num_rows > 0){
-      while($row = $query->fetch_assoc()){
-        $imagesource = 'upload/'.$row["product_image"];
-    ?>
-      <img src="<?php echo $imagesource; ?>" alt="" />
-      <p><?= $row["product_name"] ?></p>
-      <p><?php 
-            $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
-            echo $realtype; ?></p>
-    <?php  
-      
-    }
-    }else{ ?>
-      <p>No Images Found</p>
-    <?php }
-    ?>
-  </body>
-
-    
+</body>
 </html>

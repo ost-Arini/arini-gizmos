@@ -1,19 +1,11 @@
 <?php
 
-
 session_start();
 
+// $id = $_GET['id'];
+// echo $id;
 include ('connect.php');
-$user_id = $_SESSION['user_id'];
 
-// echo $user_id;
-// $product_name = $_POST['product_name'];
-// $id = $_GET['product_id'];
-$query = $db->query("SELECT * FROM `products` WHERE created_by_user_id = $user_id AND delete_flag = 0");
-// $last_id = mysqli_insert_id($db);
-
-// $timeout_duration = 60;
-// if(isset($_SESSION))
 $now = time();
 
 if ($now  > $_SESSION['session_expired']){
@@ -27,9 +19,11 @@ if(!isset($_SESSION["login"])){
   exit;
 }
 
+$id = $_POST['id'];
+$query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
+// echo $query;
+
 ?>
-
-
 
 <!doctype html>
 <html lang="en">
@@ -46,12 +40,12 @@ if(!isset($_SESSION["login"])){
     <!-- <link rel="stylesheet" type="text/css" href="css/home.css"> -->
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
 
-    <title>Your Products</title>
+    <title>Delete Product</title>
   </head>
 
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="home.php">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -92,58 +86,61 @@ if(!isset($_SESSION["login"])){
       </div>
     </nav>
 
+   
 
     <div class="content">
-      <h2 class="text-center">Your Products</h2>
-      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2 class="text-center">Delete Product</h2>
+      <p class="text-center">Are you sure you want to delete this item? You can just update by clicking the Update button below.</p>
+    </div>
 
-      <?php
+    <?php
       //cek ada di database apa nggak 
       if($query->num_rows > 0){
         while($row = $query->fetch_assoc()){
-          $imagesource = 'upload/'.$row["product_image"];
-      ?>
-      <div class="card" style="width: 18rem;">
-      
-        <img class="card-img-top" src="<?php echo $imagesource; ?>" alt="" />
-        <div class="card-body">
-          <p>Product Name : <?= $row["product_name"] ?></p>
-          <p>Product Type : <?php 
-                $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
-                echo $realtype; ?></p>
-
-          <a href="updateproduct.php?id=<?= $row["product_id"]?>" class="btn btn-primary">Update</a>
-          
-          <form action="confirmdeleteproduct.php" method="POST">
-          <input type="hidden" name="id" value="<?= $row["product_id"]?>">
-          <input type="submit" name="submit" class="btn btn-danger" value="Delete">
-          </form>
-          <!-- <a href="confirmdeleteproduct.php?id=<?= $row["product_id"]?>" class="btn btn-danger">Delete</a> -->
-        </div>
-      <?php  
+            $imagesource = 'upload/'.$row["product_image"];
+        ?>
+        <div>
         
-      }
-      }else{ ?>
-        <p>You haven't uploaded any products yet</p>
-      <?php }
-      ?>
-      </div>
-      
-    </div>
+          <img src="<?php echo $imagesource; ?>" alt="" />
+          <div>
+            <p>Product Name : <?= $row["product_name"] ?></p>
+            <p>Product Type : <?php 
+                  $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
+                  echo $realtype; ?></p>
+            <button href="yourproducts.php" class="btn btn-primary">Update</button>
+            <form name="deleteproduct" action="action/doDeleteProduct.php" method="POST">
+            <input type="hidden" name="id" value="<?= $row["product_id"]?>">
+            <input type="submit" name="submit" class="btn btn-danger" onClick="deleteConfirm()" value="Delete">
+            <script>
+            document.getElementById('deleteproduct').addEventListener('click',function(event) {deleteconfirm(e);},false);
+            function deleteConfirm(e){
+                var delconf = confirm("Are you sure you want to delete this item?");
+                if(delconf == true) {
+                    document.location.href = "action/doDeleteProduct.php";
+                } else {
+                  event.preventDefault();
+                }
+            }
+            </script>
+            </form>
+            
+            <!-- <button class="btn btn-danger" onClick="deleteConfirm()">Delete</button>
 
-    <!-- <div class="container">
-      <div class="col-md-3">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <script>
+            function deleteConfirm(){
+                var delconf = confirm("Are you sure you want to delete this item?");
+                if(delconf == true) {
+                    document.location.href = "action/doDeleteProduct.php?id=<?= $row["product_id"]?>";
+                }
+            }
+            </script> -->
           </div>
-        </div>
-      </div>
-    </div> -->
-
+        <?php      
+        }
+      } ?>
+      
+      <br>
+      
 
   </body>
-</html>
+  </html>
