@@ -107,7 +107,8 @@ $query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
             <p>Product Type : <?php 
                   $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
                   echo $realtype; ?></p>
-            <button href="yourproducts.php" class="btn btn-primary">Update</button>
+            <!-- <a href="yourproducts.php" class="btn btn-primary">Update</a> -->
+            <a href="updateproduct.php?id=<?= $row["product_id"]?>" class="btn btn-primary">Update</a>
             <form name="deleteproduct" action="action/doDeleteProduct.php" method="POST">
             <input type="hidden" name="id" value="<?= $row["product_id"]?>">
             <input type="submit" name="submit" class="btn btn-danger" onClick="deleteConfirm()" value="Delete">

@@ -82,16 +82,27 @@ if(!isset($_SESSION["login"])){
 
 <?php
 //tampilin data dari submitnew, pake form yang di hidden, belum ada hubungannya sama database
+    $updfile = $_POST['old_product_image'];
+    $target_dir_upd = "upload/delete/";
+    if(!file_exists($target_dir_upd)){
+      mkdir($target_dir_upd, 0777, true);
+      // chmod($target_dir_upd, 777);
+    }
+    $product_id=  $_POST['product_id'];
+    $oldlocation = "upload/".$product_id."/";
+    $delfile = $target_dir_upd .basename($updfile);
+    // echo basename($updfile);
+    //copy(from_file, to_file, context)
+    //copy('upload/114/4.jpg','upload/delete/4.jpg');
+    copy($oldlocation.$updfile,$target_dir_upd.$updfile);
+
     $product_name = $_POST['product_name'];
     $product_type = $_POST['product_type'];
     $name = $_FILES['product_image']['name'];
     //karena masih confirmation page jadi ditaronya di folder temp
     $target_dir = "upload/temp/";
-    //basename = buat tau file name from full path
     $target_file = $target_dir  . basename($name);
-    //move_uploaded_file(file, dest)
-    //cuma bisa dipake buat files uploaded via PHP's HTTP POST upload mechanism
-    //kalo filenya udah exist, otomatis dioverwrite
+
     move_uploaded_file($_FILES['product_image']['tmp_name'],$target_dir.$name);
 ?>
 
@@ -104,12 +115,14 @@ if(!isset($_SESSION["login"])){
           <label for="product_name">New Product Name</label>
           <input id="product_name" type="hidden" name="product_name" value="<?= $product_name ?>" class="form-control">
           <?= $product_name ?>
+          <input type="hidden" name="product_id" value="<?= $product_id ?>">
         </div>
 
         <div class="form-group mt-5">
           <label for="product_image">New Product Image</label>
           <!-- ini style di hidden!-->
           <input id="product_image" type="hidden" value="<?= $target_file ?>" name="product_image" class="form-control">
+          <input id="product_image" type="hidden" value="<?= $updfile ?>" name="old_product_image" class="form-control">
           <input id="product_image"  type="hidden" value="<?= $name ?>" name="image_real_name" class="form-control">
           <img src="<?=$target_file ?>" alt="">
         </div>

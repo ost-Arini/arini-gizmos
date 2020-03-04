@@ -94,25 +94,25 @@ if(!isset($_SESSION["login"])){
     ?>
         <form id="form" action="confirmupdate.php" method="POST" enctype="multipart/form-data">
         <div class="form-group mt-5">
-            <label for="product_name">Product Name : <?= $row["product_name"] ?></label>
-            <input id="product_name" type="type" name="product_name" class="form-control" placeholder="Change Product Name">
+            <label for="product_name">Product Name</label>
+            <input id="product_name" type="type" name="product_name" class="form-control" value="<?= $row["product_name"] ?>">
+            <!-- buat lempar ID ke confirm page -->
+            <input type="hidden" name="product_id" value="<?= $id ?>">
         </div>
 
         <div class="form-group mt-5">
           <label for="product_image">Product Image : </label>
           <img src="<?php echo $imagesource; ?>" alt="" />
           <input id="product_image" type="file" name="product_image" class="form-control">
+          <input id="old_product_image" type="hidden" name="old_product_image" value="<?= $row["product_image"] ?>">
         </div>
       
         <div class="form-group mt-5">
-          <label for="product_type">Product Type :<?php 
-            $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
-            echo $realtype; ?></label>
-          <select id="product_type" name="product_type" class="form-control">
+          <label for="product_type">Product Type</label>
+          <select id="product_type" name="product_type" class="form-control" value="<?= $row["product_type"] ?>">
             <option value="0">Change Type</option>
-            <option value="1">New</option>
-            <option value="2">Used</option>
-            <!-- <option value="new">Sale</option> -->
+            <option value="1"<?php echo ( $row["product_type"]=='1')?'selected':'' ?>>New</option>
+            <option value="2"<?php echo ( $row["product_type"]=='2')?'selected':'' ?>>Used</option>
           </select>
         </div>
         <button type="submit" name="submit" onclick="validate()" class="btn btn-primary mb-5">Submit</button>
@@ -125,6 +125,8 @@ if(!isset($_SESSION["login"])){
     }
     }?>
     
-   
+    <!-- <?php 
+            $realtype = $row["product_type"] == 1 ? 'New' : 'Used';
+            echo $realtype; ?> -->
   </body>
 </html>
