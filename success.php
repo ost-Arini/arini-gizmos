@@ -4,21 +4,11 @@
     // echo $id;
 
     include ('connect.php');
-
     
     $command = "SELECT * FROM users WHERE user_id = $id";
     $result = $db->query($command);
     
-    // if ($result->num_rows == 1) {
-    //     // output data of each row
-    //     // $hasildata = $result->fetch_assoc();
-    //     // var_dump($hasildata);
-    //     while($row = $result->fetch_assoc()) {
-    //         echo "id: " . $row["user_id"]. " - Name: " . $row["user_name"]. " " . $row["email"]. "<br>";
-    //     }
-    // } else {
-    //     echo "NO RESULT";
-    // }
+
 ?>
 
 <!doctype html>
@@ -61,10 +51,6 @@
                 <tr>
                     <td>Username</td>
                     <td><?= $row["nickname"] ?></td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><?= $row["password"] ?></td>
                 </tr>
                 <tr>
                     <td>Gender</td>

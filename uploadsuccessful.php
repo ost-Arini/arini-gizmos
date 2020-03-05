@@ -5,6 +5,7 @@ session_start();
 $id = $_GET['id'];
 // echo $id;
 include ('connect.php');
+include ('navbar.php');
 
 $query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
 
@@ -19,56 +20,13 @@ $query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/slim.min.js"></script>
-    <script type="text/javascript" src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/formlogin.js"></script>
+    
 
     <title>Upload Successful</title>
   </head>
   <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="home.php">Home</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <?php
-              echo "Hello " .$_SESSION['username'];
-            ?>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="profile.php">Profile</a>
-              <!-- <a class="dropdown-item" href="gallery.php">Gallery</a> -->
-              <a class="dropdown-item" href="logout.php">Log Out</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Product
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="submitnew.php">Submit New</a>
-              <a class="dropdown-item" href="yourproducts.php">Your Products</a>
-              <!-- <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">SALE</a> -->
-            </div>
-          </li>
-          <li class="nav-item">
-            <!-- <a class="fas fa-user ml-3 mt-2 nav-link" href="#"></a> -->
-            <a class="fas fa-search ml-3 mt-2 nav-link" href="#"></a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="logout.php">Log Out</a>
-          </li> -->
-        </ul>
-      </div>
-    </nav>
-
+ 
 
     <div class="container">
     <h2 class="text mt-5 text-center">Upload Successful</h2>
