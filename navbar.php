@@ -40,7 +40,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="submitnew.php">Submit New</a>
               <a class="dropdown-item" href="yourproducts.php">Your Products</a>
-              <a class="dropdown-item" href="allproducts.php">All Products</a>
+              <!-- <a class="dropdown-item" href="allproducts.php">All Products</a> -->
             </div>
           </li>
           <li class="nav-item">

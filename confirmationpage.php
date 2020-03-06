@@ -70,7 +70,7 @@ if(!isset($_SESSION["login"])){
           <!-- ini style di hidden!-->
           <input id="product_image" type="hidden" value="<?= $target_file ?>" name="product_image" class="form-control">
           <input id="product_image"  type="hidden" value="<?= $name ?>" name="image_real_name" class="form-control">
-          <img src="<?=$target_file ?>" alt="">
+          <img src="<?=$target_file ?>" alt="" width="500">
         </div>
 
         <div class="form-group mt-5">

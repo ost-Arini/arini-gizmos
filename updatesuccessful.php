@@ -49,9 +49,9 @@ $query = $db->query("SELECT * FROM `products` WHERE product_id=$id");
       //cek ada di database apa nggak 
       if($query->num_rows > 0){
         while($row = $query->fetch_assoc()){
-          $imagesource = 'upload/'.$row["product_image"];
+          $imagesource = 'upload/'.$row["product_id"].'/'.$row["product_image"];
       ?>
-      <div class="card" style="width: 18rem;">
+      <div class="card" style="width:18rem;">
       
         <img class="card-img-top" src="<?php echo $imagesource; ?>" alt="" />
         <div class="card-body">

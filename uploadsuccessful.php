@@ -34,9 +34,9 @@ $query = $db->query("SELECT * FROM `products` WHERE product_id = $id");
     //cek ada di database apa nggak 
     if($query->num_rows > 0){
       while($row = $query->fetch_assoc()){
-        $imagesource = 'upload/'.$row["product_image"];
+        $imagesource = 'upload/'.$row["product_id"].'/'.$row["product_image"];
     ?>
-      <img src="<?php echo $imagesource; ?>" alt="" />
+      <img src="<?php echo $imagesource; ?>" alt="" width="500">
       <p><?= $row["product_name"] ?></p>
       <p><?php 
             $realtype = $row["product_type"] == 1 ? 'New' : 'Used';

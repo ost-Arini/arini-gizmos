@@ -49,7 +49,7 @@ if(!isset($_SESSION["login"])){
       //cek ada di database apa nggak 
       if($query->num_rows > 0){
         while($row = $query->fetch_assoc()){
-          $imagesource = 'upload/'.$row["product_image"];
+          $imagesource = 'upload/'.$row["product_id"].'/'.$row["product_image"];
       ?>
           <form id="form" action="confirmupdate.php" method="POST" enctype="multipart/form-data">
           <div class="form-group mt-5">
@@ -61,7 +61,7 @@ if(!isset($_SESSION["login"])){
 
           <div class="form-group mt-5">
             <label for="product_image">Product Image : </label>
-            <img src="<?php echo $imagesource; ?>" alt="" />
+            <img src="<?php echo $imagesource; ?>" alt="" width="500">
             <input id="product_image" type="file" name="product_image" class="form-control">
             <input id="old_product_image" type="hidden" name="old_product_image" value="<?= $row["product_image"] ?>">
           </div>

@@ -20,7 +20,7 @@ if(isset($_POST["submit"])){
   $product_id=  $_POST['product_id'];
   
 
-  if(!isset($_POST["name"])){
+  if(isset($_POST["image_real_name"]) == ''){
     /// no new image
 
     $query ="update products set product_name='".$product_name."',product_type=$product_type,updated_by_user_id=$user_id,updated_by_user_name='".$user_name."' where product_id=$product_id";
@@ -37,7 +37,7 @@ if(isset($_POST["submit"])){
       $target_file = $target_dir . basename($name);
       $oldlocation = "upload/".$product_id."/";
       $query ="update products set product_name='".$product_name."',product_image='".$real_image."',product_type=$product_type,updated_by_user_id=$user_id,updated_by_user_name='".$user_name."' where product_id=$product_id";
-      // echo $query;
+      // echo $query; 
       mysqli_query($db,$query);
       copy('../'.$target_dir.$real_image,'../'.$oldlocation.$real_image);
       unlink($delfile);

@@ -6,7 +6,7 @@ include ('../connect.php');
 $login = $_POST['login'];
 $urname = $_POST['username'];
 $password = $_POST['password'];
-$login_query = "SELECT * FROM `users` WHERE `nickname` = '$urname' AND `password` = '$password'";
+$login_query = "SELECT * FROM `users` WHERE `nickname` = '$urname' AND `password` = '$password' AND deleted_flag=0";
 $result = $db->query($login_query);
 $_SESSION['username'] = $urname;
 

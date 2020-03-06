@@ -72,21 +72,21 @@ if(!isset($_SESSION["login"])){
           <label for="product_name">New Product Name</label>
           <input id="product_name" type="hidden" name="product_name" value="<?= $product_name ?>" class="form-control">
           <?= $product_name ?>
-          <input type="text" name="product_id" value="<?= $product_id ?>">
+          <input type="hidden" name="product_id" value="<?= $product_id ?>">
         </div>
 
         <div class="form-group mt-5">
           <label for="product_image">New Product Image</label>
           <!-- ini style di hidden!-->
           <?php if($name == '') { ?>
-            <img src="<?=$oldlocation ?><?= $updfile ?>" alt="">
+            <img src="<?=$oldlocation ?><?= $updfile ?>" alt="" width="500">
           <?php } 
           else {
             ?>
             <input id="product_image" type="hidden" value="<?= $target_file ?>" name="product_image" class="form-control">
-            <input id="product_image"  type="hidden" value="<?= $name ?>" name="image_real_name" class="form-control">
-            <input id="product_image" type="hidden" value="<?= $updfile ?>" name="old_product_image" class="form-control">
-            <img src="<?=$target_file ?>" alt="">
+            <input id="image_real_name"  type="hidden" value="<?= $name ?>" name="image_real_name" class="form-control">
+            <input id="old_product_image" type="hidden" value="<?= $updfile ?>" name="old_product_image" class="form-control">
+            <img src="<?=$target_file ?>" alt="" width="500">
           <?php 
           }
           ?>
