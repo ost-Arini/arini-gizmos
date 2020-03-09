@@ -44,8 +44,16 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="fas fa-search ml-3 mt-2 nav-link" href="#"></a>
+            <a  class="nav-link" href="transaction_form.php">
+              Transaction
+            </a>
           </li>
+          <!-- <li class="nav-item">
+            <form action="" method="POST">
+              <input type="text" name="keyword" placeholder="type in your search..." autocomplete="off">
+              <button type="submit" name="search"><i class="fas fa-search"></i></button>
+              </form>
+          </li> -->
         </ul>
       </div>
     </nav>
