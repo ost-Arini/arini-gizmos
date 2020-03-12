@@ -33,11 +33,9 @@ if(!isset($_SESSION["login"])){
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/productdisplay.css">
     <link href="css/select2.min.css" rel="stylesheet" />
-    <script src="js/jquery.min.js"></script>
     <script src="js/select2.min.js"></script>
-    
+    <script src="js/transactionform.js"></script>
     
     <title>Transaction Form</title>
   </head>
@@ -45,9 +43,9 @@ if(!isset($_SESSION["login"])){
   <body>
     <div class="container">
         <h2 class="text mt-5">Transaction Form</h2>
-        <div id="error"><p id="messages" style="color:red"></p></div>
+        <div id="error"><p id="errormsg" style="color:red"></p></div>
         
-        <form action="" method="POST">
+        <form id="form" action="confirmtransaction.php" method="POST">
             <div class="form-group mt-5">
                 <label for="date">Transaction Date</label>
 				<input type="date" class="form-control" id="date" name="date" value="<?= date("Y-m-d",time()) ?>">
@@ -79,12 +77,13 @@ if(!isset($_SESSION["login"])){
                             <tr>
                                 <td>
                                     <select class="js-example-basic-single form-control" id="product_name" style="width:300px;" name="product_name[]">
+                                        <option value="0">Select product</option>
                                     <?php while($row = $query->fetch_assoc()){?>
-                                            <option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option>
+                                        <option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option>
                                     <?php } ?>
                                     </select>
                                 </td>
-                                <td><input type="number" id="qty" class="form-control" style="width:100px;" name="qty[]"></td>
+                                <td><input type="number" id="qty" class="form-control" style="" name="qty[]"></td>
                                 <td class="text-center"><button type="button" id="delete_row" onclick="deleterow(this)">delete row</button></td>
                             </tr>
                             <?php } ?>
@@ -94,7 +93,7 @@ if(!isset($_SESSION["login"])){
             </div>
             <div><button type="button" id="add_row" onclick="addRow()">Add row</button></div>
             <br>
-            <button type="submit" name="submit" class="btn btn-primary mb-5">Submit</button>
+            <button type="submit" name="submit" class="btn btn-primary mb-5" onclick="validate()">Submit</button>
             <button type="reset" class="btn btn-danger mb-5">Reset</button>
         </form>
     </div>  
@@ -106,23 +105,25 @@ if(!isset($_SESSION["login"])){
         $('.js-example-basic-single').select2();
     });
     
+    
     function addRow(){
         <?php $query = $db->query("SELECT * FROM `products` WHERE delete_flag=0"); ?>
-        var product = '<td><select class="js-example-basic-single form-control" id="product_name" style="width:300px;" name="product_name[]"><?php while($row = $query->fetch_assoc()){ ?><option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option><?php } ?></select></td>';
+        var product = '<td><select class="js-example-basic-single form-control" id="product_name" style="width:300px;" name="product_name[]"><option value="0">Select product</option><?php while($row = $query->fetch_assoc()){ ?><option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option><?php } ?></select></td>';
         
         $('#transaction_table').append('<tr>'+product+'<td><input type="number" id="qty" class="form-control" style="width:100px;" name="qty[]"></td><td class="text-center"><button type="button" id="delete_row" onclick="deleterow(this)">delete row</button></td></tr>');
     };
 
     function deleterow(r) {      
-            // delete row (index-0). 
-            var i = r.parentNode.parentNode.rowIndex;
-            document.getElementById("transaction_table").deleteRow(i); 
-          } 
-
-    </script>
+        // delete row (index-0). 
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("transaction_table").deleteRow(i); 
+    }; 
 
     
-            
+    
+
+    </script>
+        
  
   </body>
 </html>

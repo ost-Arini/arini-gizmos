@@ -59,7 +59,7 @@ if(!isset($_SESSION["login"])){
       <h2 class="text mt-5">Confirmation Page</h2>
       <form id="form" action="action/doSubmitnew.php" method="POST" enctype="multipart/form-data">
 
-      <div class="form-group mt-5">
+        <div class="form-group mt-5">
           <label for="product_name">Product Name</label>
           <input id="product_name" type="hidden" name="product_name" value="<?= $product_name ?>" class="form-control">
           <?= $product_name ?>
