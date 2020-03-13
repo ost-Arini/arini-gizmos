@@ -8,9 +8,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
     <script type="text/javascript" src="js/slim.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
   </head>
   <body>
 
@@ -43,11 +47,21 @@
               <!-- <a class="dropdown-item" href="allproducts.php">All Products</a> -->
             </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Transaction
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="transaction_form.php">New Transaction</a>
+              <a class="dropdown-item" href="allTransactions.php">Transaction List</a>
+              
+            </div>
+          </li>
+          <!-- <li class="nav-item">
             <a  class="nav-link" href="transaction_form.php">
               Transaction
             </a>
-          </li>
+          </li> -->
           <!-- <li class="nav-item">
             <form action="" method="POST">
               <input type="text" name="keyword" placeholder="type in your search..." autocomplete="off">

@@ -7,24 +7,6 @@ $id = $_GET['id'];
 include ('connect.php');
 include ('navbar.php');
 
-//$query= "SELECT * FROM `transaction` WHERE `detail_transaction` IN SELECT id from transaction_id = $id";
-//$query= $db->query("SELECT * FROM `detail_transaction` WHERE transaction_id = $id");
-// $query = "SELECT
-//             `detail_transaction`.transaction_id,
-//             `detail_transaction`.product_id,
-//             `detail_transaction`.quantity,
-//             `transaction`.transaction_date,
-//             `transaction`.address,
-//             `transaction`.memo,
-//             `transaction`.status,
-//         FROM `detail_transaction`
-//         JOIN `transaction` ON `transaction`.id = `detail_transaction`.`transaction`.id";
-
-// $query = $db->query("SELECT  a.`transaction_id`,`address`,`status`,`memo`,`transaction_date`, quantity, b.product_id , product_name, product_image FROM transaction a
-// JOIN detail_transaction b ON  a.transaction_id= b.transaction_id
-// JOIN products c ON b.product_id = c.product_id
-// WHERE a.transaction_id = $id");
-
 $item_list = $db->query("SELECT a.product_id, transaction_id, quantity, product_name,product_image FROM detail_transaction a
 JOIN products b ON a.product_id = b.product_id
 WHERE transaction_id = $id");
@@ -73,7 +55,7 @@ $query= $db->query("SELECT * FROM `transaction` WHERE transaction_id = $id");
             <div>
             <label for="status">status</label>
             <?php
-            $realstatus = ($row["status"] == 1) ? 'On Process' : ($row["status"] == 2) ? 'Finished' :  'Cancelled' ; 
+            $realstatus = ($row["status"] == 1) ? 'On Process' : ($row["status"] == 2) ? 'Finished' : ($row["status"] == 3) ? 'Cancelled' : 'Loading...' ; 
             echo $realstatus;
             ?>
             </div>
@@ -104,6 +86,12 @@ $query= $db->query("SELECT * FROM `transaction` WHERE transaction_id = $id");
         </tbody>
     </table>
     <?php } ?>
+    <form action="confirmdeleteproduct.php" method="POST">
+        <a href="updateproduct.php?id=<?= $row["product_id"]?>" class="btn btn-primary">Edit</a>
+        <input type="hidden" name="id" value="<?= $row["product_id"]?>">
+        <input type="submit" name="submit" class="btn btn-warning" value="Cancel Order">
+        <input type="submit" name="submit" class="btn btn-danger" value="Delete">
+    </form>
   </div>
 
   </body>

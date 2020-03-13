@@ -42,7 +42,6 @@ if(!isset($_SESSION["login"])){
     $date = $_POST['date'];
     $address = $_POST['address'];
     $memo = $_POST['memo'];
-    $product_id = $_POST['product_id'];
     $product_name = $_POST['product_name'];
     $qty = $_POST['qty'];
     // $target_file = "upload/".$row["product_id"]."/".$row["product_image"].""
@@ -84,9 +83,9 @@ if(!isset($_SESSION["login"])){
                       <tr> 
                         <td><?php
                           while($row = $query->fetch_assoc()){ ?>
-                            <input id="product_id" type="hidden" name="product_id[]" value="<?= $product_id ?>" class="form-control">
-                            <?= $row["product_id"] ?>
-                            <input id="product_name" type="hidden" name="product_name[]" value="<?= $product_name ?>" class="form-control">
+                            <!-- <input id="product_id" type="text" name="product_id[]" value="<?= $product_id[$index] ?>" class="form-control"> -->
+                            <!-- <?= $row["product_id"] ?> -->
+                            <input id="product_name" type="hidden" name="product_name[]" value="<?= $product_name[$index] ?>" class="form-control">
                             <?= $row["product_name"] ?>
                         </td>
                         <td>
@@ -95,7 +94,7 @@ if(!isset($_SESSION["login"])){
                         ?>
                         <img src="<?=$target_file ?>" class="" style="width:100px;"></td>
                         <td>
-                          <input type="hidden" class="form-control" id="qty" name="qty[]" value="<?php $qty[$index] ?>">
+                          <input type="hidden" class="form-control" id="qty" name="qty[]" value="<?= $qty[$index] ?>">
                           <?= $qty[$index] ?>
                         </td>
                       <?php }

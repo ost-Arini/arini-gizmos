@@ -48,7 +48,7 @@ if(!isset($_SESSION["login"])){
         <form id="form" action="confirmtransaction.php" method="POST">
             <div class="form-group mt-5">
                 <label for="date">Transaction Date</label>
-				<input type="date" class="form-control" id="date" name="date" value="<?= date("Y-m-d",time()) ?>">
+				<input type="text" id="datepicker" class="form-control" name="date">
             </div>
             <div class="form-group mt-5">
                 <label for="address">Address</label>
@@ -70,13 +70,16 @@ if(!isset($_SESSION["login"])){
                     </thead>
                     <tbody>
                         <div id="transaction_detail">
+                        <!-- buat itung value perkara looping product name -->
+                        <input type="hidden" id="count" value="3">
                         <?php
+                        
                         for($i=1;$i<=3;$i++){
                             $query = $db->query("SELECT * FROM `products` WHERE delete_flag=0");
                         ?>
                             <tr>
                                 <td>
-                                    <select class="js-example-basic-single form-control" id="product_name" style="width:300px;" name="product_name[]">
+                                    <select class="js-example-basic-single form-control" id="product_name<?=$i?>" style="width:300px;" name="product_name[]">
                                         <option value="0">Select product</option>
                                     <?php while($row = $query->fetch_assoc()){?>
                                         <option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option>
@@ -102,25 +105,44 @@ if(!isset($_SESSION["login"])){
 
     <script>
     $(document).ready(function() {
-        $('.js-example-basic-single').select2();
+        //default 3 row
+        for (let index = 1; index <=3; index++) {
+            // bukan array jadi tinggal ditambah index aja
+            $('#product_name'+index).select2();
+        }
+        $( "#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
     });
     
     
     function addRow(){
         <?php $query = $db->query("SELECT * FROM `products` WHERE delete_flag=0"); ?>
-        var product = '<td><select class="js-example-basic-single form-control" id="product_name" style="width:300px;" name="product_name[]"><option value="0">Select product</option><?php while($row = $query->fetch_assoc()){ ?><option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option><?php } ?></select></td>';
+        //nyari value dari countnya
+        var flag = $('#count').val();
+        var index = flag+1;
+        var product = '<td><select class="js-example-basic-single form-control" id="product_name'+index+'" style="width:300px;" name="product_name[]"><option value="0">Select product</option><?php while($row = $query->fetch_assoc()){ ?><option value="<?= $row["product_id"] ?>"><?= $row["product_name"] ?></option><?php } ?></select></td>';
         
-        $('#transaction_table').append('<tr>'+product+'<td><input type="number" id="qty" class="form-control" style="width:100px;" name="qty[]"></td><td class="text-center"><button type="button" id="delete_row" onclick="deleterow(this)">delete row</button></td></tr>');
+        $('#transaction_table').append('<tr>'+product+'<td><input type="number" id="qty" class="form-control"  name="qty[]"></td><td class="text-center"><button type="button" id="delete_row" onclick="deleterow(this)">delete row</button></td></tr>');
+        $('#product_name'+index).select2();
+        index++;
+        document.getElementById('count').value++;
     };
 
     function deleterow(r) {      
         // delete row (index-0). 
+        var index = $('#count').val();
         var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("transaction_table").deleteRow(i); 
-    }; 
+        document.getElementById("transaction_table").deleteRow(i);
+        if(index==1)
+        {
+            //kalo di delete sampe habis, biar ga jadi NaN (not a number)
+            document.getElementById('count').value=0;
+        } else {
+            //kalo nggak ya futsuuni ngurang
+            document.getElementById('count').value--;
+        }
+       
 
-    
-    
+    }; 
 
     </script>
         
